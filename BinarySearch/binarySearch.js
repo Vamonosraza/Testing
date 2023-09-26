@@ -10,17 +10,19 @@
 // 9. when the user says no, end the game
 // 10. when the game is over, tell the user how many games they played and their average number of guesses per game
 
+console.log("debuggin")
 const theNumber = Math.floor(Math.random() * 100) + 1;
 
-const guessInput = document.getElementById(".guess");
-const submitButton = document.getElementById(".submitGuessButton");
-const message = document.getElementById(".result");
+const guessInput = document.getElementById("guess");
+const submitButton = document.getElementById("submitGuessButton");
+const message = document.getElementById("result");
 
 let guessCount = 0;
 
 submitButton.addEventListener("click", function () {
     const guess = Number(guessInput.value);
 
+    console.log("debuggin1");
     if (isNaN(guess) || guess < 1 || guess > 100) {
         message.textContent = "Please enter a number between 1 and 100.";
     } else {
@@ -34,7 +36,5 @@ submitButton.addEventListener("click", function () {
         } else if (guess > theNumber) {
             message.textContent = "Too high. Try again.";
         }
-
-
     }
 });
