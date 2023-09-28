@@ -28,7 +28,21 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.disabled = false;
         message.textContent = "";
         guessInput.value = "";
-        guessInput.focus();
+        guessInput.focus(); // puts the cursor in the input box
+
+        // create a message asking the user if they want to play again
+        const playAgainMessage = document.createElement("p");
+        playAgainMessage.textContent = "Would you like to play again?";
+        message.appendChild(playAgainMessage);
+
+        // create a button to restart the game
+        const playAgainButton = document.createElement("button");
+        playAgainButton.textContent = "Play Again";
+        playAgainButton.addEventListener("click", function () {
+            message.removeChild(playAgainMessage);
+            message.removeChild(playAgainButton);
+            initializeGame();
+        });
     }
 
     submitButton.addEventListener("click", function () {
@@ -40,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             guessCount++;
             if (guess === theNumber) {
-                message.textContent = "Congratulations! You guessed the number!";
+                message.textContent = "Congratulations! You guessed the number in " + guessCount + "!";
                 guessInput.disabled = true;
                 submitButton.disabled = true;
             } else if (guess < theNumber) {
