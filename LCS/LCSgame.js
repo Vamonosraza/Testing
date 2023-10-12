@@ -1,11 +1,33 @@
+let lcs = '';
+
 document.getElementById("lcsForm").addEventListener("submit", function(event) {
     event.preventDefault();
     const word1 = document.getElementById("word1").value;
     const word2 = document.getElementById("word2").value;
-    const lcs = longestCommonSubsequence(word1, word2);
-    const resultDiv = document.getElementById("result");
-    resultDiv.textContent = "Longest Common Subsequence: " + lcs;
+    lcs = longestCommonSubsequence(word1, word2);
+    const scsLength = word1.length + word2.length - lcs.length;
+    const scs = findShortestLCS(word1, word2, lcs);
+
+    document.getElementById('showLCSButton').setAttributeNS('data-lcs', lcs);
+    document.getElementById('shortLCSButton').setAttributeNS('data-scs', scs);
 });
+
+document.getElementById('shortLCSButton').addEventListener('click', function() {
+    const scs = this.getAttributeNS('data-scs');
+    displayResults('SCS: ' + scs);
+});
+
+document.getElementById('showLCSButton').addEventListener('click', function() {
+    const lcs = this.getAttributeNS('data-lcs');
+    displayResults('LCS: ' + lcs);
+});   
+
+function displayResults(message) {
+    const resultDiv = document.getElementById("result");
+    resultDiv.textContent = message;
+}
+
+
 
 function longestCommonSubsequence(str1, str2) {
     const m = str1.length;
@@ -40,4 +62,27 @@ function longestCommonSubsequence(str1, str2) {
     }
 
     return lcs.join('');
+}
+
+function findShortestLCS(str1, str2) { // shortest LCS available
+    let result = '';
+    let i = 0, j = 0, k = 0;
+    while (k < lcs.length){
+        while (str1[i] != lcs[k]) {
+            result += str1[i];
+            i++;
+        }
+        while (str2[j] != lcs[k]) {
+            result += str2[j];
+            j++;
+        }
+
+        result += lcs[k];
+        i++;
+        j++;
+        k++;
+    }
+
+    result += str1.substring(i) + str2.substring(j);
+    return result;
 }
